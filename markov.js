@@ -29,13 +29,18 @@ class MarkovMachine {
       let nextWord = this.words[i+1];
       
       if (thisWord in chains) {
-        chains[thisWord].add(nextWord);
+        if (nextWord in chains[thisWord]) {
+          
+        } else {
+          chains[thisWord].push(nextWord);
+        }
+        
       } else {
-        chains[thisWord] = new Set();
-        chains[thisWord].add(nextWord);
+        chains[thisWord] = [];
+        chains[thisWord].push(nextWord);
       }
   }
-  return chains;
+    return chains;
 }
 
 
@@ -48,25 +53,37 @@ class MarkovMachine {
   // }
   /** return random text from chains */
 
-  makeText(numWords = 100) {
-    // TODO
-    console.log(this.chains);
+  randomElementFromArray (arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
   }
+
+  makeText(numWords = 5) {
+    // TODO
+    
+    const chainsKeys = Object.keys(this.chains);
+    
+
+    const output = [this.randomElementFromArray(chainsKeys)]; //initialize output string with a random key from this.chains
+
+    while (output.length < numWords) {
+    let seedWord = output[output.length-1]
+    
+    const nextWordChoices = this.chains[seedWord];
+    output.push(this.randomElementFromArray(nextWordChoices));
+    }
+
+    return output.join(' ');
+  }
+  
 }
 
-// const eggs = fs.readFileSync('eggs.txt', 'utf8', (err, data) => {
-//   if (err) {
-//     console.log('Error reading file\n', err);
-//   } else {
-    
-//   }
-// });
 
-const eggs = fs.readFileSync('eggs.txt','utf8');
+const eggs = fs.readFileSync('simpletext.txt','utf8');
 
 const eggsMarkov = new MarkovMachine(eggs);
 
-eggsMarkov.makeText();
+const newStory = eggsMarkov.makeText(50);
 
+console.log(newStory);
 
 // eggsMarkov.makeText();
