@@ -24,7 +24,8 @@ if (dataSource === 'file') {
     const get_url_data = async function (path) {
         try {
         const {data} = await axios.get(path);
-        const mm = new MarkovMachine(data);
+        
+        const mm = new MarkovMachine(convert(data));
         console.log(mm.makeText())
         } catch(err) {
             console.log('Error handling URL\n',err);
