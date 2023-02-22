@@ -1,12 +1,7 @@
 const { Console } = require('console');
 const fs = require('fs');
 
-/** Textual markov chain generator */
-
-
 class MarkovMachine {
-
-  /** build markov machine; read in text.*/
 
   constructor(text) {
     let words = text.split(/[ \r\n]+/);
@@ -14,14 +9,8 @@ class MarkovMachine {
     this.chains = this.makeChains();
   }
 
-  /** set markov chains:
-   *
-   * 
-   *  for text of "the cat in the hat", chains will be
-   *  {"the": ["cat", "hat"], "cat": ["in"], "in": ["the"], "hat": [null]} */
-
   makeChains() {
-    // TODO
+
     const chains={};
   
     for (let i = 0; i < this.words.length - 1; i++){
@@ -43,22 +32,12 @@ class MarkovMachine {
     return chains;
 }
 
-
-  //     } else {
-  //       chains.thisWord = new Set();
-  //       chains.thisWord.add(nextWord)
-  //     }
-  //   }
-  //   return chains;
-  // }
-  /** return random text from chains */
-
   randomElementFromArray (arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 
-  makeText(numWords = 5) {
-    // TODO
+  makeText(numWords = 50) {
+
     
     const chainsKeys = Object.keys(this.chains);
     
@@ -78,12 +57,6 @@ class MarkovMachine {
 }
 
 
-const eggs = fs.readFileSync('simpletext.txt','utf8');
 
-const eggsMarkov = new MarkovMachine(eggs);
 
-const newStory = eggsMarkov.makeText(50);
-
-console.log(newStory);
-
-// eggsMarkov.makeText();
+module.exports = {MarkovMachine}
