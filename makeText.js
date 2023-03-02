@@ -16,6 +16,7 @@ if (dataSource === 'file') {
             console.log('Error reading file:\n', err);
             process.exit(1);
         } else {
+        console.log('datatype: ',typeof(data));
         const mm = new MarkovMachine(data);
         console.log(mm.makeText());
         }
@@ -41,11 +42,3 @@ if (dataSource === 'file') {
     console.log(err);
     process.exit(1);
 }
-
-
-
-
-
-// const eggsMarkov = new MarkovMachine(txt);
-
-// const newStory = eggsMarkov.makeText(50);
